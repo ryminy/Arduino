@@ -32,7 +32,7 @@ void loop() {
   
   if( input[0] != '\0')
   {
-    Serial.print("Am primit stringul:");
+    Serial.print("Am primit stringulaa:");
     Serial.println(input);
     
     digitalWrite(13,HIGH);
