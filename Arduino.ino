@@ -9,8 +9,7 @@ void setup() {
 
 
 void loop() {
-
-  char ch;
+  
   char input[MAXSIZE+1];
   int i;
   i = 0;
@@ -20,10 +19,8 @@ void loop() {
   {
     if(i < 10)
     {
-      ch = Serial.read();
       delay(2);
-      input[i] = ch;
-      i++;
+      input[i++] = Serial.read();
       input[i] = '\0';
     }
     else
@@ -32,11 +29,7 @@ void loop() {
   
   if( input[0] != '\0')
   {
-    Serial.print("Am primit stringulaa:");
+    Serial.print("Am primit stringul:");
     Serial.println(input);
-    
-    digitalWrite(13,HIGH);
-    //delay(2000);
-    digitalWrite(13,LOW);
   }
 } 
