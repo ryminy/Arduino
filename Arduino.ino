@@ -1,4 +1,7 @@
-#define MAXSIZE 7
+#define MAXSIZE 6
+#define TRUE 1
+#define FALSE 0
+
 typedef struct _packet
 {
   char src;
@@ -29,6 +32,20 @@ void packetToString(char *str, packet *pkt)
    str[6] = '\0';
 }
 
+int checkCRC(char *str)
+{
+  int sum = 0;
+  int i;
+
+  for(i = 0; i < MAXSIZE -1;i++)
+    sum +=str[i];
+
+  if((sum%127) == str[5])
+    return TRUE;
+  else
+    return FALSE;
+}
+
 void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
@@ -40,7 +57,7 @@ void setup() {
 
 void loop() {
   
-  char input[MAXSIZE];
+  char input[MAXSIZE+1];
   int i;
   packet pkt;
 
@@ -51,7 +68,7 @@ void loop() {
     
     while (Serial.available() > 0)
     {
-        if(i < MAXSIZE-1)
+        if(i < MAXSIZE)
         {
           delay(2);
           input[i++] = Serial.read();
@@ -63,8 +80,14 @@ void loop() {
     
     if( input[0] != '\0')
     {
-      Serial.print("Am primit stringul:");
-      Serial.println(input);
+      if(checkCRC(input))
+      {
+        Serial.print("Am primit stringul: ");
+        Serial.println(input);
+      }
+      else
+        Serial.println("CRC failed");
+
     }  
   }
  
