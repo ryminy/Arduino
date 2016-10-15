@@ -11,6 +11,8 @@ void loop()
   
 char inByte = ' ';
 
+while(1)
+{
   if(Serial.available())
   { 
     inByte = Serial.read();
@@ -21,4 +23,6 @@ char inByte = ' ';
       Serial.println(inByte);
   }
 
+  inByte = ' ';
+}
 }
